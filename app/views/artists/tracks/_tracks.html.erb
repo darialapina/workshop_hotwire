@@ -1,0 +1,13 @@
+<%# locals: (artist:, tracks:, current_page: 0, next_page: 1) -%>
+<%= turbo_frame_tag "tracks-#{artist.id}-#{current_page}", target: "_top" do %>
+  <ul class="tracks">
+    <% tracks.each_with_index do |track, i| %>
+      <%= render partial: "tracks/track", locals: {track:, track_counter: current_page * 25 + i, enqueueble: true} %>
+    <% end %>
+  </ul>
+
+  <% if next_page %>
+    <%= turbo_frame_tag "tracks-#{artist.id}-#{next_page}", target: "_top",
+                        src: artist_tracks_path(artist, page: next_page), loading: "lazy" %>
+  <% end %>
+<% end %>
