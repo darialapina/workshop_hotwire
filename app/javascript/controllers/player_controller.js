@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { useHotkeys } from "stimulus-use/hotkeys"
 import FakeAudio from "fake_audio";
 
 function secondsToDuration(num) {
@@ -48,6 +49,10 @@ export default class extends Controller {
     if (this.playing) {
       this.play();
     }
+
+    useHotkeys(this, {
+      'space': [this.togglePlayHandler]
+    })
   }
 
   disconnect() {
@@ -114,5 +119,9 @@ export default class extends Controller {
   removeAudioListeners() {
     this.audio.removeEventListener("timeupdate", this.handleTimeUpdate);
     this.audio.removeEventListener("ended", this.handleEnded);
+  }
+
+  togglePlayHandler() {
+    this.playing ? this.pause() : this.play();
   }
 }
