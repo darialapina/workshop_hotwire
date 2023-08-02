@@ -10,4 +10,8 @@
   .flash.alert {
     @apply border-red-800 text-red-800;
   }
+
+  .flash .close-btn {
+    @apply absolute top-2 right-2 cursor-pointer transition-colors hover:text-secondary;
+  }
 }
